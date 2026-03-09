@@ -1,33 +1,52 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { blogSchema } from '../schema/BlogSchema.js';
 import { useBlogContext } from '../context/BlogContext.js';
+import { useAuthContext } from '../context/AuthContext.js';
 import { useState } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 
 const CreateBlog = () => {
-  const { Blog, addBlog } = useBlogContext();
+  const { Blog, addBlog, updateBlog } = useBlogContext();
+  const { userEmail } = useAuthContext();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
-  const [blogState, setBlogState] = useState(false);
+  const editId = searchParams.get('edit');
+  const editBlog = editId ? Blog.find((b) => String(b.id) === editId) : null;
+  const isEditMode = !!editBlog;
+
+  const [blogState, setBlogState] = useState(null); // 'added' | 'updated' | null
+
   const currDate = new Date();
+
   const handleSubmitPost = (values, { resetForm }) => {
-    const newBlog = {
-      id: Date.now(),
-      ...values,
-      upload_date: currDate.toDateString(),
-    };
-    addBlog(newBlog);
-    resetForm();
-    setBlogState(true);
+    if (isEditMode) {
+      updateBlog(Number(editId), values);
+      setBlogState('updated');
+      setTimeout(() => navigate('/blogs'), 1200);
+    } else {
+      const newBlog = {
+        id: Date.now(),
+        user: userEmail,
+        ...values,
+        upload_date: currDate.toDateString(),
+      };
+      addBlog(newBlog);
+      resetForm();
+      setBlogState('added');
+    }
   };
 
   return (
     <div className="max-w-6xl mx-auto ">
-      <h2>Create Blog</h2>
+      <h2>{isEditMode ? 'Edit Blog' : 'Create Blog'}</h2>
       <div className="mt-3">
         <Formik
+          enableReinitialize
           initialValues={{
-            title: '',
-            category: '',
-            content: '',
+            title: editBlog?.title || '',
+            category: editBlog?.category || '',
+            content: editBlog?.content || '',
           }}
           validationSchema={blogSchema}
           onSubmit={handleSubmitPost}
@@ -103,13 +122,17 @@ const CreateBlog = () => {
                 type="submit"
                 className="px-5 py-3 bg-btn text-black rounded-md mt-3 cursor-pointer"
               >
-                Post
+                {isEditMode ? 'Update' : 'Post'}
               </button>
             </Form>
           )}
         </Formik>
-        {blogState && (
+
+        {blogState === 'added' && (
           <p className="text-green-600 mt-2">Blog added successfully</p>
+        )}
+        {blogState === 'updated' && (
+          <p className="text-green-600 mt-2">Blog updated successfully!</p>
         )}
       </div>
     </div>

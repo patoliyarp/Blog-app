@@ -6,7 +6,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const { isLogin, setIsLogin } = useAuthContext();
+  const { isLogin, setUserEmail } = useAuthContext();
 
   return (
     <nav className="bg-secondary opacity-95 sticky  top-0 w-full z-10">
@@ -71,7 +71,7 @@ const Navbar = () => {
                       <MenuItem>
                         <button
                           type="submit"
-                          onClick={() => setIsLogin(false)}
+                          onClick={() => setUserEmail(null)}
                           className="block w-full px-4 py-2 text-left text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden"
                         >
                           Sign out

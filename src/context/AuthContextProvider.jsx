@@ -2,19 +2,22 @@ import { useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext.js';
 
 export default function AuthContextProvider({ children }) {
-  const LocalUser = JSON.parse(localStorage.getItem('user')) || false;
-  const [isLogin, setIsLogin] = useState(LocalUser);
+  const [userEmail, setUserEmail] = useState(
+    () => localStorage.getItem('userEmail') || null
+  );
+
+  const isLogin = !!userEmail;
 
   useEffect(() => {
-    if (isLogin == true) {
-      localStorage.setItem('user', JSON.stringify(isLogin));
-    } else if (isLogin == false) {
-      localStorage.removeItem('user');
+    if (userEmail) {
+      localStorage.setItem('userEmail', userEmail);
+    } else {
+      localStorage.removeItem('userEmail');
     }
-  }, [isLogin]);
+  }, [userEmail]);
 
   return (
-    <AuthContext.Provider value={{ isLogin, setIsLogin }}>
+    <AuthContext.Provider value={{ isLogin, userEmail, setUserEmail }}>
       {children}
     </AuthContext.Provider>
   );
