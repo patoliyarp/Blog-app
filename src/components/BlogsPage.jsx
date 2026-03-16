@@ -85,7 +85,6 @@ const BlogsPage = () => {
                       {post?.upload_date}
                     </p>
 
-                    {/* Edit & Delete — visible only for the creator */}
                     {isOwner && (
                       <div className="flex items-center gap-2">
                         {/* Edit button */}

@@ -15,7 +15,7 @@ const CreateBlog = () => {
   const editBlog = editId ? Blog.find((b) => String(b.id) === editId) : null;
   const isEditMode = !!editBlog;
 
-  const [blogState, setBlogState] = useState(null); // 'added' | 'updated' | null
+  const [blogState, setBlogState] = useState(null);
 
   const currDate = new Date();
 
@@ -23,7 +23,7 @@ const CreateBlog = () => {
     if (isEditMode) {
       updateBlog(Number(editId), values);
       setBlogState('updated');
-      setTimeout(() => navigate('/blogs'), 1200);
+      setTimeout(() => navigate('/blogs'), 500);
     } else {
       const newBlog = {
         id: Date.now(),
