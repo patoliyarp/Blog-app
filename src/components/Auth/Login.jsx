@@ -23,7 +23,6 @@ export function Login() {
         .required('Required'),
     }),
     onSubmit: (values) => {
-      // Mock auth — any valid email + password is accepted
       setUserEmail(values.email);
       Navigate('/');
       setError(null);

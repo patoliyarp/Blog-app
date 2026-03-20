@@ -18,8 +18,11 @@ export default function BlogCard({ id, title, description, category }) {
                 </h3>
               </div>
               <div className="pb-2">
-                <p className="mt-5 line-clamp-3 text-sm/6 text-gray-400">
-                  {description}
+                <p
+                  className="mt-5 line-clamp-3 text-sm/6 text-gray-400"
+                  dangerouslySetInnerHTML={{ __html: description }}
+                >
+                  {/* dangerouslySetInnerHTML={{ __html: content }} */}
                 </p>
               </div>
               <Link to={`/blogdetail/${id}`}>

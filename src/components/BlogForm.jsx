@@ -7,8 +7,10 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 
 const CreateBlog = () => {
   const { Blog, addBlog, updateBlog } = useBlogContext();
+
   const { userEmail } = useAuthContext();
   const [searchParams] = useSearchParams();
+
   const navigate = useNavigate();
 
   const editId = searchParams.get('edit');
@@ -38,7 +40,7 @@ const CreateBlog = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto ">
+    <div className="max-w-5xl mx-auto ">
       <h2>{isEditMode ? 'Edit Blog' : 'Create Blog'}</h2>
       <div className="mt-3">
         <Formik

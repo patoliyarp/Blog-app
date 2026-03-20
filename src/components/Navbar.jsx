@@ -32,7 +32,7 @@ const Navbar = () => {
                 Blog
               </Link>
               <Link
-                href="#"
+                to="/about"
                 className="text-primary-text hover:bg-primary hover:text-white border  border-transparent hover:border-primary-100 px-3 py-2 rounded-xl text-sm"
               >
                 About

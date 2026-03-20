@@ -53,8 +53,11 @@ const BlogDetail = () => {
         <hr className="border-primary-100 mb-8" />
 
         {/* blog content */}
-        <div className="text-gray-300 text-base leading-7 space-y-5">
-          {blog.content}
+        <div
+          className="text-gray-300 text-base leading-7 space-y-5"
+          dangerouslySetInnerHTML={{ __html: blog.content }}
+        >
+          {/* {blog.content} */}
         </div>
 
         {/* bottom divider */}

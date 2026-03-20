@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { BlogContext } from './BlogContext.js';
-// import { createLogger } from 'vite';
 
 const blogs = [
   {
@@ -42,23 +41,19 @@ const blogs = [
 ];
 
 export default function BlogContextProvider({ children }) {
-  //   let locBlogs;
-
   const localBlog = JSON.parse(localStorage.getItem('blogs')) || blogs;
   const [Blog, setBlog] = useState(localBlog);
 
   function deleteBlog(id) {
     setBlog((prev) => prev.filter((obj) => obj.id !== id));
-    // localStorage.setItem('blogs', JSON.stringify(Blog));
   }
   useEffect(() => {
     localStorage.setItem('blogs', JSON.stringify(Blog));
   }, [Blog]);
   function addBlog(NewBlog) {
-    console.log('NewBlog :>> ', NewBlog);
+    // console.log('NewBlog :>> ', NewBlog);
     setBlog((prev) => [...prev, NewBlog]);
-    console.log('Blog :>> ', Blog);
-    // localStorage.setItem('blogs', JSON.stringify(Blog));
+    // console.log('Blog :>> ', Blog);
   }
 
   function updateBlog(id, newData) {

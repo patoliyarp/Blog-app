@@ -75,8 +75,11 @@ const BlogsPage = () => {
                   </h2>
 
                   {/* description */}
-                  <p className="text-sm text-gray-400 line-clamp-3">
-                    {post.content}
+                  <p
+                    className="text-sm text-gray-400 line-clamp-3"
+                    dangerouslySetInnerHTML={{ __html: post.content }}
+                  >
+                    {/* {post.content} */}
                   </p>
 
                   {/* author + date + owner actions */}
